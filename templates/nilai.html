@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% macro tabel() %}
+<tr>
+	<td>{{ key }}</td>
+	<td>{{ value }}</td>
+</tr>
+{% endmacro %}
+
+{% macro tampilNilai(ket) %}
+	<p>
+		{% if not ket %}
+			{% set ket = "Mengenaskan" %}
+		{% endif %}
+		<strong>Nilai {{ mhs.nama }} yang {{ ket }}:</strong>
+		<table border="1">
+			{% for key, value in mhs.nilai %}
+				{% if ket=='Lulus' %}
+					{% if value>50 %}
+						{{ tabel() }}
+					{% endif %}
+				{% elif ket=='Gagal' %}
+					{% if value<=50 and value>30 %}
+						{{ tabel() }}
+					{% endif %}
+				{% else %}
+					{% if value<30 %}
+						{{ tabel() }}
+					{% endif %}
+				{% endif %}
+			{% endfor %}
+		</table>
+	</p>
+{% endmacro %}
+
+{% block title %}Nilai Mahasiswa{% endblock %}
+
+{% block content %}
+	{{ tampilNilai('Lulus') }}
+	{{ tampilNilai('Gagal') }}
+	{{ tampilNilai() }}
+	<p>
+		Absen pada tanggal: 
+		{% for tgl in mhs.absensi %}
+			{% if loop.last %}
+			{{ tgl }}.
+			{% else %}
+			{{ tgl }},
+			{% endif %}
+		{% endfor %}
+	</p>
+{% endblock %}
+
+{% block footer %}
+	<p>
+		Halaman ini dibangun pada tanggal {{ date }}.
+	</p>
+{% endblock %}

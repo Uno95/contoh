@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Data Mahasiswa{% endblock %}
+
+{% block content %}
+	<p>
+		Hello {{ mhs.nama | replace("do", "jo") | capitalize}}!<br>
+		NIM anda adalah {{ mhs.NIM | sort | join}}.<br>
+		Kelas anda adalah TI-{{ mhs.kelas }} {{ mhs.waktu }}.<br>
+	</p>
+	<p>
+		Jumlah kata dalam nama anda adalah: {{ mhs.nama | wordcount }}<br>
+	</p>
+	<p>
+		Lihat <a href="/nilai">nilai saya</a>.
+	</p>
+{% endblock %}
+
+{% block footer %}
+	{{ super() }}<br>
+	Made by {{'{{'}} {{ mhs.nama }} {{'}}'}}
+	{#
+		This is just a comment.
+	#}
+{% endblock %}
